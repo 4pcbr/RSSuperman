@@ -1,4 +1,13 @@
 PODS:
+  - MWFeedParser (1.0.1):
+    - MWFeedParser/FeedParser
+    - MWFeedParser/NSDate+InternetDateTime
+    - MWFeedParser/NSString+HTML
+  - MWFeedParser/FeedParser (1.0.1):
+    - MWFeedParser/NSDate+InternetDateTime
+    - MWFeedParser/NSString+HTML
+  - MWFeedParser/NSDate+InternetDateTime (1.0.1)
+  - MWFeedParser/NSString+HTML (1.0.1)
   - OMGHTTPURLRQ (2.1):
     - OMGHTTPURLRQ/RQ
   - OMGHTTPURLRQ/FormURLEncode (2.1)
@@ -42,9 +51,11 @@ PODS:
     - PromiseKit/Promise
 
 DEPENDENCIES:
+  - MWFeedParser
   - PromiseKit
 
 SPEC CHECKSUMS:
+  MWFeedParser: 2cf646014c1baf6ad1b08c480b40a08180079247
   OMGHTTPURLRQ: f8c515dfd2f57a5d74c710978f600231f52afec5
   PromiseKit: 7ecae7c190ab92ae00aae6ba7f88942107532b8f
 

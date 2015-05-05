@@ -15,7 +15,13 @@
 
 @property (nonatomic, retain) NSNumber * read;
 @property (nonatomic, retain) NSString * title;
-@property (nonatomic, retain) NSString * url;
+@property (nonatomic, retain) NSString * link;
+@property (nonatomic, retain) NSString * author;
+@property (nonatomic, retain) NSDate * date;
+@property (nonatomic, retain) NSDate * updatedAt;
+@property (nonatomic, retain) NSString * summary;
+@property (nonatomic, retain) NSString * content;
+@property (nonatomic, retain) NSString * identifier;
 @property (nonatomic, retain) Feed *feed;
 
 @end

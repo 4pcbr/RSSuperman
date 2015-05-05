@@ -6,13 +6,16 @@
 //  Copyright (c) 2015 Brand New Heroes. All rights reserved.
 //
 
+#import <PromiseKit/Promise.h>
+#import <MWFeedParser.h>
 #import "MasterViewController.h"
 #import "DetailViewController.h"
 #import "TextInputViewController.h"
 #import "Feed.h"
+#import "RSSController.h"
 
 @interface MasterViewController ()
-
+@property (strong, nonatomic) RSSController *rssController;
 @end
 
 @implementation MasterViewController
@@ -28,18 +31,34 @@
 - (void)displayTextInput:(id)sender {
     UIStoryboard *textInputStoryBoard = [UIStoryboard storyboardWithName:@"TextInput" bundle:[NSBundle mainBundle]];
     UINavigationController *navController = [textInputStoryBoard instantiateInitialViewController];
-    NSLog(@"The number of child view controllers: %ld", [navController.childViewControllers count]);
     TextInputViewController *textInputVC = navController.childViewControllers[0];
+    
     textInputVC.pageTitle = @"New RSS feed";
     textInputVC.placeholderText = @"Type in a new RSS/ATOM feed link";
+    
     textInputVC.cancel = ^{
         [self dismissViewControllerAnimated:YES completion:nil];
     };
+    
     __weak MasterViewController *weakSelf = self;
-    textInputVC.save = ^(NSString *feedURL, NSString *feedTitle) {
-        [weakSelf insertNewFeedWithURL:feedURL andTitle:feedTitle];
+    textInputVC.save = ^(NSString *feedURL) {
+        
         [self dismissViewControllerAnimated:YES completion:nil];
+        weakSelf.rssController = [[RSSController alloc] initWithFeedURL:feedURL];
+        Feed *feed = [weakSelf insertNewFeedWithURL:feedURL andTitle:feedURL];
+        [weakSelf.rssController fetch].then(^ {
+            NSString *feedTitle = weakSelf.rssController.feedInfo.title;
+            feed.title = feedTitle;
+            NSManagedObjectContext *context = [weakSelf.fetchedResultsController managedObjectContext];
+            NSError *error = nil;
+            if (![context save:&error]) {
+                NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+            }
+        }).catch(^(NSError *fetchError) {
+            NSLog(@"FetchError: %@", fetchError);
+        });
     };
+    
     navController.modalPresentationStyle = UIModalPresentationFormSheet;
     [self presentViewController:navController animated:YES completion:nil];
 }
@@ -54,7 +73,7 @@
     self.detailViewController = (DetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
 }
 
-- (void)insertNewFeedWithURL:(NSString *)feedURL andTitle:(NSString *)feedTitle {
+- (Feed *)insertNewFeedWithURL:(NSString *)feedURL andTitle:(NSString *)feedTitle {
     NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
     NSEntityDescription *entity = [[self.fetchedResultsController fetchRequest] entity];
     
@@ -66,7 +85,7 @@
     // Normally you should use accessor methods, but using KVC here avoids the need to add a custom class to the template.
     //    [newManagedObject setValue:[NSDate date] forKey:@"timeStamp"];
     // TODO: Implement feed URL and title
-    feed.url   = feedURL;
+    feed.link  = feedURL;
     feed.title = feedTitle;
     
     // Save the context.
@@ -77,6 +96,8 @@
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
         abort();
     }
+    
+    return feed;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -84,9 +105,6 @@
     // Dispose of any resources that can be recreated.
 }
 
-//- (void)insertNewObject:(id)sender {
-//    
-//}
 
 #pragma mark - Segues
 
@@ -96,10 +114,7 @@
         
         Feed *feed = [[self fetchedResultsController] objectAtIndexPath:indexPath];
         DetailViewController *controller = (DetailViewController *)[[segue destinationViewController] topViewController];
-        
-//        [controller setDetailItem:object];
         [controller setFeed:feed];
-        
         controller.navigationItem.leftBarButtonItem = self.splitViewController.displayModeButtonItem;
         controller.navigationItem.leftItemsSupplementBackButton = YES;
     }
@@ -164,7 +179,7 @@
     [fetchRequest setFetchBatchSize:20];
     
     // Edit the sort key as appropriate.
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"fetchedAt" ascending:NO];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"title" ascending:NO];
     NSArray *sortDescriptors = @[sortDescriptor];
     
     [fetchRequest setSortDescriptors:sortDescriptors];

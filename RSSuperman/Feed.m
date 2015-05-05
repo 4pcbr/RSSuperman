@@ -13,8 +13,9 @@
 @implementation Feed
 
 @dynamic title;
-@dynamic fetchedAt;
-@dynamic url;
+@dynamic updatedAt;
+@dynamic link;
+@dynamic summary;
 @dynamic posts;
 
 @end

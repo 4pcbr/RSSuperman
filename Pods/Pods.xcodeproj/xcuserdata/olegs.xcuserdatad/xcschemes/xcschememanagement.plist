@@ -4,6 +4,11 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>Pods-RSSuperman-MWFeedParser.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-RSSuperman-OMGHTTPURLRQ.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -22,17 +27,22 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>41ECC71A0F205DF72BFE0631</key>
+		<key>1C5BFD9CC66437DB25C2CB55</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>4D2F01D226B1213375D69530</key>
+		<key>A2DBEC8A3BCC81FB1B230BBE</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>B2A1DC286FAA57DC12B81458</key>
+		<key>A650D6DADA42B748D3C940AB</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>EAE228F6F216390F08FE5029</key>
 		<dict>
 			<key>primary</key>
 			<true/>

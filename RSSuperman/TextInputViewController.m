@@ -18,7 +18,6 @@
 #pragma mark - navBar actions
 
 - (IBAction)cancelButtonTapped:(UIBarButtonItem *)sender {
-//    [self dismissViewControllerAnimated:YES completion:nil];
     if (self.cancel) {
         self.cancel();
     }
@@ -61,10 +60,10 @@
 
 - (void)reportNewInput {
     // TODO: Fetch the feed and detect it's title automatically
-    NSString *feedTitle = self.textInput.text;
-    NSString *feedURL   = self.textInput.text;
+    NSString *feedURLString   = self.textInput.text;
+    
     if (self.save) {
-        self.save(feedURL, feedTitle);
+        self.save(feedURLString);
     }
 }
 

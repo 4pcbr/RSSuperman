@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 typedef void(^TextInputViewControllerCancel)(void);
-typedef void(^TextInputViewControllerSave)(NSString *feedURL, NSString *feedTitle);
+typedef void(^TextInputViewControllerSave)(NSString *feedURL);
 
 @interface TextInputViewController : UIViewController
 @property (copy, nonatomic) TextInputViewControllerCancel cancel;

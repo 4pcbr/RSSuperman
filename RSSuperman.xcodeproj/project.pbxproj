@@ -18,8 +18,9 @@
 		5D066BAB1AF81BE200DC2657 /* RSSupermanTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D066BAA1AF81BE200DC2657 /* RSSupermanTests.m */; };
 		5D066BBE1AF81E4800DC2657 /* TextInput.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D066BBD1AF81E4800DC2657 /* TextInput.storyboard */; };
 		5D066BC11AF8211A00DC2657 /* TextInputViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D066BC01AF8211A00DC2657 /* TextInputViewController.m */; };
-		5D066BD01AF91B6900DC2657 /* Post.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D066BCF1AF91B6900DC2657 /* Post.m */; };
-		5D066BD31AF91B6A00DC2657 /* Feed.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D066BD21AF91B6A00DC2657 /* Feed.m */; };
+		5D066BD61AF91FA500DC2657 /* RSSController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D066BD51AF91FA500DC2657 /* RSSController.m */; };
+		5D066BE61AF93B3400DC2657 /* Feed.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D066BE51AF93B3400DC2657 /* Feed.m */; };
+		5D066BE91AF93B3400DC2657 /* Post.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D066BE81AF93B3400DC2657 /* Post.m */; };
 		F613E1AE6B32314CA7C422ED /* libPods-RSSuperman.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F172D892DCE21507FE12BCAD /* libPods-RSSuperman.a */; };
 /* End PBXBuildFile section */
 
@@ -54,10 +55,12 @@
 		5D066BBD1AF81E4800DC2657 /* TextInput.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = TextInput.storyboard; sourceTree = "<group>"; };
 		5D066BBF1AF8211A00DC2657 /* TextInputViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextInputViewController.h; sourceTree = "<group>"; };
 		5D066BC01AF8211A00DC2657 /* TextInputViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextInputViewController.m; sourceTree = "<group>"; };
-		5D066BCE1AF91B6900DC2657 /* Post.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Post.h; sourceTree = "<group>"; };
-		5D066BCF1AF91B6900DC2657 /* Post.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Post.m; sourceTree = "<group>"; };
-		5D066BD11AF91B6A00DC2657 /* Feed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Feed.h; sourceTree = "<group>"; };
-		5D066BD21AF91B6A00DC2657 /* Feed.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Feed.m; sourceTree = "<group>"; };
+		5D066BD41AF91FA500DC2657 /* RSSController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSSController.h; sourceTree = "<group>"; };
+		5D066BD51AF91FA500DC2657 /* RSSController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSSController.m; sourceTree = "<group>"; };
+		5D066BE41AF93B3400DC2657 /* Feed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Feed.h; sourceTree = "<group>"; };
+		5D066BE51AF93B3400DC2657 /* Feed.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Feed.m; sourceTree = "<group>"; };
+		5D066BE71AF93B3400DC2657 /* Post.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Post.h; sourceTree = "<group>"; };
+		5D066BE81AF93B3400DC2657 /* Post.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Post.m; sourceTree = "<group>"; };
 		F172D892DCE21507FE12BCAD /* libPods-RSSuperman.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-RSSuperman.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F23D29AAA98C434D1B7039AE /* Pods-RSSuperman.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RSSuperman.release.xcconfig"; path = "Pods/Target Support Files/Pods-RSSuperman/Pods-RSSuperman.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -112,6 +115,7 @@
 		5D066B871AF81BE200DC2657 /* RSSuperman */ = {
 			isa = PBXGroup;
 			children = (
+				5D066BDD1AF93AE800DC2657 /* Data */,
 				5D066BB61AF81DD500DC2657 /* Model */,
 				5D066BB51AF81CFD00DC2657 /* ViewControllers */,
 				5D066BB41AF81CF400DC2657 /* Storyboards */,
@@ -175,13 +179,22 @@
 		5D066BB61AF81DD500DC2657 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				5D066BD11AF91B6A00DC2657 /* Feed.h */,
-				5D066BD21AF91B6A00DC2657 /* Feed.m */,
-				5D066BCE1AF91B6900DC2657 /* Post.h */,
-				5D066BCF1AF91B6900DC2657 /* Post.m */,
+				5D066BE71AF93B3400DC2657 /* Post.h */,
+				5D066BE81AF93B3400DC2657 /* Post.m */,
+				5D066BE41AF93B3400DC2657 /* Feed.h */,
+				5D066BE51AF93B3400DC2657 /* Feed.m */,
 				5D066B8F1AF81BE200DC2657 /* RSSuperman.xcdatamodeld */,
 			);
 			name = Model;
+			sourceTree = "<group>";
+		};
+		5D066BDD1AF93AE800DC2657 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				5D066BD41AF91FA500DC2657 /* RSSController.h */,
+				5D066BD51AF91FA500DC2657 /* RSSController.m */,
+			);
+			name = Data;
 			sourceTree = "<group>";
 		};
 		894DAC958016C7B97EFDD655 /* Pods */ = {
@@ -332,11 +345,12 @@
 				5D066BC11AF8211A00DC2657 /* TextInputViewController.m in Sources */,
 				5D066B971AF81BE200DC2657 /* DetailViewController.m in Sources */,
 				5D066B941AF81BE200DC2657 /* MasterViewController.m in Sources */,
+				5D066BE61AF93B3400DC2657 /* Feed.m in Sources */,
+				5D066BE91AF93B3400DC2657 /* Post.m in Sources */,
+				5D066BD61AF91FA500DC2657 /* RSSController.m in Sources */,
 				5D066B8E1AF81BE200DC2657 /* AppDelegate.m in Sources */,
 				5D066B8B1AF81BE200DC2657 /* main.m in Sources */,
-				5D066BD31AF91B6A00DC2657 /* Feed.m in Sources */,
 				5D066B911AF81BE200DC2657 /* RSSuperman.xcdatamodeld in Sources */,
-				5D066BD01AF91B6900DC2657 /* Post.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

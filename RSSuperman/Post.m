@@ -14,7 +14,13 @@
 
 @dynamic read;
 @dynamic title;
-@dynamic url;
+@dynamic link;
+@dynamic author;
+@dynamic date;
+@dynamic updatedAt;
+@dynamic summary;
+@dynamic content;
+@dynamic identifier;
 @dynamic feed;
 
 @end

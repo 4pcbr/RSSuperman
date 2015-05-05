@@ -5,6 +5,7 @@ source 'https://github.com/CocoaPods/Specs.git'
 
 target "RSSuperman" do
   pod "PromiseKit"
+  pod "MWFeedParser"
 end
 
 target "RSSupermanTests" do

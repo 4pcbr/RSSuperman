@@ -14,8 +14,9 @@
 @interface Feed : NSManagedObject
 
 @property (nonatomic, retain) NSString * title;
-@property (nonatomic, retain) NSDate * fetchedAt;
-@property (nonatomic, retain) NSString * url;
+@property (nonatomic, retain) NSDate * updatedAt;
+@property (nonatomic, retain) NSString * link;
+@property (nonatomic, retain) NSString * summary;
 @property (nonatomic, retain) NSSet *posts;
 @end
 
