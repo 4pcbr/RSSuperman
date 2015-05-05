@@ -8,6 +8,8 @@
 
 #import "MasterViewController.h"
 #import "DetailViewController.h"
+#import "TextInputViewController.h"
+#import "Feed.h"
 
 @interface MasterViewController ()
 
@@ -23,30 +25,50 @@
     }
 }
 
+- (void)displayTextInput:(id)sender {
+    UIStoryboard *textInputStoryBoard = [UIStoryboard storyboardWithName:@"TextInput" bundle:[NSBundle mainBundle]];
+    UINavigationController *navController = [textInputStoryBoard instantiateInitialViewController];
+    NSLog(@"The number of child view controllers: %ld", [navController.childViewControllers count]);
+    TextInputViewController *textInputVC = navController.childViewControllers[0];
+    textInputVC.pageTitle = @"New RSS feed";
+    textInputVC.placeholderText = @"Type in a new RSS/ATOM feed link";
+    textInputVC.cancel = ^{
+        [self dismissViewControllerAnimated:YES completion:nil];
+    };
+    __weak MasterViewController *weakSelf = self;
+    textInputVC.save = ^(NSString *feedURL, NSString *feedTitle) {
+        [weakSelf insertNewFeedWithURL:feedURL andTitle:feedTitle];
+        [self dismissViewControllerAnimated:YES completion:nil];
+    };
+    navController.modalPresentationStyle = UIModalPresentationFormSheet;
+    [self presentViewController:navController animated:YES completion:nil];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     self.navigationItem.leftBarButtonItem = self.editButtonItem;
 
-    UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(insertNewObject:)];
+    UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(displayTextInput:)];
     self.navigationItem.rightBarButtonItem = addButton;
     self.detailViewController = (DetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-- (void)insertNewObject:(id)sender {
+- (void)insertNewFeedWithURL:(NSString *)feedURL andTitle:(NSString *)feedTitle {
     NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
     NSEntityDescription *entity = [[self.fetchedResultsController fetchRequest] entity];
-    NSManagedObject *newManagedObject = [NSEntityDescription insertNewObjectForEntityForName:[entity name] inManagedObjectContext:context];
-        
+    
+    //    NSManagedObject *newManagedObject = [NSEntityDescription insertNewObjectForEntityForName:[entity name] inManagedObjectContext:context];
+    
+    Feed *feed = [NSEntityDescription insertNewObjectForEntityForName:[entity name] inManagedObjectContext:context];
+    
     // If appropriate, configure the new managed object.
     // Normally you should use accessor methods, but using KVC here avoids the need to add a custom class to the template.
-    [newManagedObject setValue:[NSDate date] forKey:@"timeStamp"];
-        
+    //    [newManagedObject setValue:[NSDate date] forKey:@"timeStamp"];
+    // TODO: Implement feed URL and title
+    feed.url   = feedURL;
+    feed.title = feedTitle;
+    
     // Save the context.
     NSError *error = nil;
     if (![context save:&error]) {
@@ -57,14 +79,27 @@
     }
 }
 
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+//- (void)insertNewObject:(id)sender {
+//    
+//}
+
 #pragma mark - Segues
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([[segue identifier] isEqualToString:@"showDetail"]) {
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        NSManagedObject *object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
+        
+        Feed *feed = [[self fetchedResultsController] objectAtIndexPath:indexPath];
         DetailViewController *controller = (DetailViewController *)[[segue destinationViewController] topViewController];
-        [controller setDetailItem:object];
+        
+//        [controller setDetailItem:object];
+        [controller setFeed:feed];
+        
         controller.navigationItem.leftBarButtonItem = self.splitViewController.displayModeButtonItem;
         controller.navigationItem.leftItemsSupplementBackButton = YES;
     }
@@ -108,8 +143,8 @@
 }
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
-    NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    cell.textLabel.text = [[object valueForKey:@"timeStamp"] description];
+    Feed *feed = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    cell.textLabel.text = feed.title;
 }
 
 #pragma mark - Fetched results controller
@@ -122,14 +157,14 @@
     
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     // Edit the entity name as appropriate.
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Event" inManagedObjectContext:self.managedObjectContext];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Feed" inManagedObjectContext:self.managedObjectContext];
     [fetchRequest setEntity:entity];
     
     // Set the batch size to a suitable number.
     [fetchRequest setFetchBatchSize:20];
     
     // Edit the sort key as appropriate.
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timeStamp" ascending:NO];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"fetchedAt" ascending:NO];
     NSArray *sortDescriptors = @[sortDescriptor];
     
     [fetchRequest setSortDescriptors:sortDescriptors];

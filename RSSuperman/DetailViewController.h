@@ -8,9 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+@class Feed;
+
 @interface DetailViewController : UIViewController
 
-@property (strong, nonatomic) id detailItem;
+@property (strong, nonatomic) Feed *feed;
 @property (weak, nonatomic) IBOutlet UILabel *detailDescriptionLabel;
 
 @end

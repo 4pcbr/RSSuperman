@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="qpS-Pl-f3W">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <scenes>
+        <!--Navigation Controller-->
+        <scene sceneID="A9j-ZV-Fud">
+            <objects>
+                <navigationController id="qpS-Pl-f3W" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="qyn-r2-Q88">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="AN1-QT-KP2" kind="relationship" relationship="rootViewController" id="KUd-Vr-qwg"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="NYN-m8-K3l" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1002" y="379"/>
+        </scene>
+        <!--Text Input View Controller-->
+        <scene sceneID="AoS-ta-OIV">
+            <objects>
+                <viewController storyboardIdentifier="TextInput" useStoryboardIdentifierAsRestorationIdentifier="YES" id="AN1-QT-KP2" customClass="TextInputViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="D5E-mF-4vs"/>
+                        <viewControllerLayoutGuide type="bottom" id="Pwz-Rb-UiT"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="F25-bg-Yy0">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="textInput" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder=" " textAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Wql-dk-gGA">
+                                <rect key="frame" x="16" y="72" width="568" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" keyboardType="URL"/>
+                                <connections>
+                                    <outlet property="delegate" destination="AN1-QT-KP2" id="pvg-Ht-bGs"/>
+                                </connections>
+                            </textField>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Wql-dk-gGA" firstAttribute="leading" secondItem="F25-bg-Yy0" secondAttribute="leadingMargin" id="ljm-Zf-m6T"/>
+                            <constraint firstItem="Wql-dk-gGA" firstAttribute="top" secondItem="D5E-mF-4vs" secondAttribute="bottom" constant="8" symbolic="YES" id="r5J-Sr-p10"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Wql-dk-gGA" secondAttribute="trailing" id="skG-1z-dl5"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="84C-mr-iWa">
+                        <barButtonItem key="leftBarButtonItem" title="Cancel" id="Sgz-gb-kmz">
+                            <connections>
+                                <action selector="cancelButtonTapped:" destination="AN1-QT-KP2" id="ZvX-86-1z6"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" enabled="NO" title="Save" id="0ES-Ht-GQc">
+                            <connections>
+                                <action selector="saveButtonTapped:" destination="AN1-QT-KP2" id="i0L-S3-k1H"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="saveButton" destination="0ES-Ht-GQc" id="kmE-HS-sCW"/>
+                        <outlet property="textInput" destination="Wql-dk-gGA" id="KOE-JT-Qf0"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="iyX-Z6-s5J" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-158" y="379"/>
+        </scene>
+    </scenes>
+</document>
