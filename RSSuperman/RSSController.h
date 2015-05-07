@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @class MWFeedParser;
+@class MWFeedInfo;
 @class PMKPromise;
 
 @interface RSSController : NSObject

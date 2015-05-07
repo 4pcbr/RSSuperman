@@ -8,9 +8,13 @@
 
 #import "DetailViewController.h"
 #import "Feed.h"
+#import "Post.h"
+#import "RSSController.h"
+#import <PromiseKit/Promise.h>
 
 @interface DetailViewController ()
-
+@property (strong, nonatomic) UIRefreshControl *refreshControl;
+@property (strong, nonatomic) RSSController    *rssController;
 @end
 
 @implementation DetailViewController
@@ -34,8 +38,37 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
+    
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    self.refreshControl.backgroundColor = [UIColor purpleColor];
+    self.refreshControl.tintColor = [UIColor whiteColor];
+    [self.refreshControl addTarget:self
+                            action:@selector(updateFeed)
+                  forControlEvents:UIControlEventValueChanged];
+    
     [self configureView];
+}
+
+- (void)updateFeed {
+    // TODO: implement me!
+    if (self.feed) {
+        self.rssController = [[RSSController alloc] initWithFeedURL:self.feed.link];
+        __weak DetailViewController *weakSelf = self;
+        [self.rssController fetch].then(^{
+            if (weakSelf) {
+                if (weakSelf.onFeedUpdated) {
+                    weakSelf.onFeedUpdated(weakSelf.rssController.feedInfo, weakSelf.rssController.feedItems);
+                }
+                [weakSelf.refreshControl endRefreshing];
+                [weakSelf.tableView reloadData];
+            }
+        }).catch(^(NSError *error) {
+            NSLog(@"Error while fetching the feed: %@", error);
+            if (weakSelf) {
+                [weakSelf.refreshControl endRefreshing];
+            }
+        });
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -47,6 +80,7 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     if ([self.feed.posts count]) {
+        self.tableView.backgroundView = nil;
         self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
         return 1;
     } else {
@@ -56,7 +90,6 @@
         messageLabel.textColor = [UIColor blackColor];
         messageLabel.numberOfLines = 0;
         messageLabel.textAlignment = NSTextAlignmentCenter;
-//        messageLabel.font = [UIFont fontWithName:@"Palatino-Italic" size:20];
         [messageLabel sizeToFit];
         
         self.tableView.backgroundView = messageLabel;
@@ -68,9 +101,22 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (self.feed) {
-        return [self.feed.posts count];
+        return [[self.feed.posts allObjects] count];
     } else {
         return 0;
+    }
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"FeedPostCell" forIndexPath:indexPath];
+    [self configureCell:cell atIndexPath:indexPath];
+    return cell;
+}
+
+- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+    if (self.feed) {
+        Post *feedPost = [[self.feed.posts allObjects] objectAtIndex:[indexPath row]];
+        cell.textLabel.text = feedPost.title;
     }
 }
 

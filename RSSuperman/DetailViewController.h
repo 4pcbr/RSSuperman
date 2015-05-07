@@ -8,12 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+
 @class Feed;
+@class MWFeedInfo;
+
+typedef void(^FeedUpdatedHandler)(MWFeedInfo *feedInfo, NSArray *feedItems);
 
 @interface DetailViewController : UITableViewController
-
 @property (strong, nonatomic) Feed *feed;
-@property (weak, nonatomic) IBOutlet UILabel *detailDescriptionLabel;
-
+@property (copy, nonatomic) FeedUpdatedHandler onFeedUpdated;
 @end
 

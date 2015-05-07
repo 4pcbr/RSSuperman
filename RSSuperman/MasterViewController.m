@@ -12,6 +12,8 @@
 #import "DetailViewController.h"
 #import "TextInputViewController.h"
 #import "Feed.h"
+#import "Post.h"
+
 #import "RSSController.h"
 
 @interface MasterViewController ()
@@ -46,14 +48,12 @@
         [self dismissViewControllerAnimated:YES completion:nil];
         weakSelf.rssController = [[RSSController alloc] initWithFeedURL:feedURL];
         Feed *feed = [weakSelf insertNewFeedWithURL:feedURL andTitle:feedURL];
+        
         [weakSelf.rssController fetch].then(^{
-            NSString *feedTitle = weakSelf.rssController.feedInfo.title;
-            feed.title = feedTitle;
-            NSManagedObjectContext *context = [weakSelf.fetchedResultsController managedObjectContext];
-            NSError *error = nil;
-            if (![context save:&error]) {
-                NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-            }
+            [weakSelf updateFeed:feed
+                        feedInfo:weakSelf.rssController.feedInfo
+                       feedItems:weakSelf.rssController.feedItems
+             ];
         }).catch(^(NSError *fetchError) {
             NSLog(@"FetchError: %@", fetchError);
         });
@@ -68,7 +68,10 @@
     // Do any additional setup after loading the view, typically from a nib.
     self.navigationItem.leftBarButtonItem = self.editButtonItem;
 
-    UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(displayTextInput:)];
+    UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
+                                                                               target:self
+                                                                               action:@selector(displayTextInput:)
+                                  ];
     self.navigationItem.rightBarButtonItem = addButton;
     self.detailViewController = (DetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
 }
@@ -77,20 +80,90 @@
     NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
     NSEntityDescription *entity = [[self.fetchedResultsController fetchRequest] entity];
     
-    Feed *feed = [NSEntityDescription insertNewObjectForEntityForName:[entity name] inManagedObjectContext:context];
+    Feed *feed = [NSEntityDescription insertNewObjectForEntityForName:[entity name]
+                                               inManagedObjectContext:context
+                  ];
     feed.link  = feedURL;
     feed.title = feedTitle;
     
-    // Save the context.
     NSError *error = nil;
     if (![context save:&error]) {
-        // Replace this implementation with code to handle the error appropriately.
-        // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
         abort();
     }
     
     return feed;
+}
+
+- (void) updateFeed:(Feed *)feed feedInfo:(MWFeedInfo *)feedInfo feedItems:(NSArray *)feedItems {
+
+    NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
+    
+    feed.title     = feedInfo.title;
+    feed.summary   = feedInfo.summary;
+    feed.updatedAt = [NSDate new];
+    
+    for (MWFeedItem *feedItem in feedItems) {
+        Post *feedPost = [self insertOrUpdateFeedPost:feedItem];
+        [feed addPostsObject:feedPost];
+    }
+    
+    NSError *error = nil;
+    if (![context save:&error]) {
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+    }
+    
+    [self.tableView reloadData];
+}
+
+- (Post *)insertOrUpdateFeedPost:(MWFeedItem *)feedItem {
+    
+    NSString *entityName = @"Post";
+    NSString *sortAttr = @"date";
+    
+    NSFetchRequest *fetchRequest    = [NSFetchRequest new];
+    NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
+    NSEntityDescription *entity     = [NSEntityDescription entityForName:entityName
+                                                  inManagedObjectContext:context
+                                       ];
+    [fetchRequest setEntity:entity];
+    
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"identifier == %@", feedItem.identifier];
+    [fetchRequest setPredicate:predicate];
+    
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:sortAttr
+                                                                   ascending:NO
+                                        ];
+    NSArray *sortDescriptors = @[sortDescriptor];
+    [fetchRequest setSortDescriptors:sortDescriptors];
+    
+    NSError *error = nil;
+    NSArray *result = [context executeFetchRequest:fetchRequest error:&error];
+    
+    Post *post;
+    
+    if (result == nil) {
+        NSLog(@"Error while retrieving a post item");
+        abort();
+    } else {
+        if ([result count] == 0) {
+            post = [NSEntityDescription insertNewObjectForEntityForName:entityName
+                                                 inManagedObjectContext:context
+                    ];
+        } else {
+            post = result[0];
+        }
+    }
+    
+    post.title      = feedItem.title;
+    post.link       = feedItem.link;
+    post.author     = feedItem.author;
+    post.date       = feedItem.date;
+    post.summary    = feedItem.summary;
+    post.content    = feedItem.content;
+    post.identifier = feedItem.identifier;
+    
+    return post;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -107,6 +180,15 @@
         Feed *feed = [[self fetchedResultsController] objectAtIndexPath:indexPath];
         DetailViewController *controller = (DetailViewController *)[[segue destinationViewController] topViewController];
         [controller setFeed:feed];
+        __weak Feed *weakFeed = feed;
+        __weak MasterViewController *weakSelf = self;
+        controller.onFeedUpdated = ^(MWFeedInfo *feedInfo, NSArray *feedItems) {
+            if (weakFeed) {
+                [weakSelf updateFeed:weakFeed feedInfo:feedInfo feedItems:feedItems];
+            } else {
+                NSLog(@"Couldn't find the feed instance. Probably it's been released already");
+            }
+        };
         controller.navigationItem.leftBarButtonItem = self.splitViewController.displayModeButtonItem;
         controller.navigationItem.leftItemsSupplementBackButton = YES;
     }
@@ -171,7 +253,7 @@
     [fetchRequest setFetchBatchSize:20];
     
     // Edit the sort key as appropriate.
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"title" ascending:NO];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"title" ascending:YES];
     NSArray *sortDescriptors = @[sortDescriptor];
     
     [fetchRequest setSortDescriptors:sortDescriptors];
