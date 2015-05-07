@@ -10,7 +10,7 @@
 
 @class Feed;
 
-@interface DetailViewController : UIViewController
+@interface DetailViewController : UITableViewController
 
 @property (strong, nonatomic) Feed *feed;
 @property (weak, nonatomic) IBOutlet UILabel *detailDescriptionLabel;

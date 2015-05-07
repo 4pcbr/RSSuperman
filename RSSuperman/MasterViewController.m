@@ -32,21 +32,21 @@
     UIStoryboard *textInputStoryBoard = [UIStoryboard storyboardWithName:@"TextInput" bundle:[NSBundle mainBundle]];
     UINavigationController *navController = [textInputStoryBoard instantiateInitialViewController];
     TextInputViewController *textInputVC = navController.childViewControllers[0];
-    
+
     textInputVC.pageTitle = @"New RSS feed";
     textInputVC.placeholderText = @"Type in a new RSS/ATOM feed link";
-    
+
     textInputVC.cancel = ^{
         [self dismissViewControllerAnimated:YES completion:nil];
     };
-    
+
     __weak MasterViewController *weakSelf = self;
+
     textInputVC.save = ^(NSString *feedURL) {
-        
         [self dismissViewControllerAnimated:YES completion:nil];
         weakSelf.rssController = [[RSSController alloc] initWithFeedURL:feedURL];
         Feed *feed = [weakSelf insertNewFeedWithURL:feedURL andTitle:feedURL];
-        [weakSelf.rssController fetch].then(^ {
+        [weakSelf.rssController fetch].then(^{
             NSString *feedTitle = weakSelf.rssController.feedInfo.title;
             feed.title = feedTitle;
             NSManagedObjectContext *context = [weakSelf.fetchedResultsController managedObjectContext];
@@ -58,7 +58,7 @@
             NSLog(@"FetchError: %@", fetchError);
         });
     };
-    
+
     navController.modalPresentationStyle = UIModalPresentationFormSheet;
     [self presentViewController:navController animated:YES completion:nil];
 }
@@ -77,14 +77,7 @@
     NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
     NSEntityDescription *entity = [[self.fetchedResultsController fetchRequest] entity];
     
-    //    NSManagedObject *newManagedObject = [NSEntityDescription insertNewObjectForEntityForName:[entity name] inManagedObjectContext:context];
-    
     Feed *feed = [NSEntityDescription insertNewObjectForEntityForName:[entity name] inManagedObjectContext:context];
-    
-    // If appropriate, configure the new managed object.
-    // Normally you should use accessor methods, but using KVC here avoids the need to add a custom class to the template.
-    //    [newManagedObject setValue:[NSDate date] forKey:@"timeStamp"];
-    // TODO: Implement feed URL and title
     feed.link  = feedURL;
     feed.title = feedTitle;
     
@@ -111,7 +104,6 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([[segue identifier] isEqualToString:@"showDetail"]) {
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        
         Feed *feed = [[self fetchedResultsController] objectAtIndexPath:indexPath];
         DetailViewController *controller = (DetailViewController *)[[segue destinationViewController] topViewController];
         [controller setFeed:feed];
