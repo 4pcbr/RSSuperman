@@ -10,10 +10,18 @@
 #import "Post.h"
 
 @interface FeedPostViewController ()
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *linkButton;
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
 @end
 
 @implementation FeedPostViewController
+
+- (IBAction)linkButtonDidTap:(UIBarButtonItem *)sender {
+    if (self.feedPost && self.feedPost.link) {
+        NSURL *feedPostURL = [NSURL URLWithString:self.feedPost.link];
+        [[UIApplication sharedApplication] openURL:feedPostURL];
+    }
+}
 
 - (void)loadWebViewContent {
     NSString *feedContent = [self.feedPost.content length] ? self.feedPost.content : self.feedPost.summary;
@@ -37,13 +45,21 @@
 - (void)configureView {
     if (self.feedPost) {
         self.title = self.feedPost.title;
+        if (self.feedPost.link) {
+            self.linkButton.enabled = YES;
+        } else {
+            self.linkButton.enabled = NO;
+        }
         [self loadWebViewContent];
+    } else {
+        self.linkButton.enabled = NO;
     }
 }
 
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.automaticallyAdjustsScrollViewInsets = NO;
     [self configureView];
 }
 

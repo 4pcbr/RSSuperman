@@ -47,14 +47,14 @@
                 NSOrderedAscending : (feed1.date < feed2.date) ?
                     NSOrderedDescending : NSOrderedSame;
         }];
+        
+        self.refreshControl = [[UIRefreshControl alloc] init];
+        self.refreshControl.backgroundColor = [UIColor purpleColor];
+        self.refreshControl.tintColor = [UIColor whiteColor];
+        [self.refreshControl addTarget:self
+                                action:@selector(updateFeed)
+                      forControlEvents:UIControlEventValueChanged];
     }
-    
-    self.refreshControl = [[UIRefreshControl alloc] init];
-    self.refreshControl.backgroundColor = [UIColor purpleColor];
-    self.refreshControl.tintColor = [UIColor whiteColor];
-    [self.refreshControl addTarget:self
-                            action:@selector(updateFeed)
-                  forControlEvents:UIControlEventValueChanged];
     
     [self configureView];
 }
@@ -94,16 +94,18 @@
         self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
         return 1;
     } else {
-        UILabel *messageLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
-        
-        messageLabel.text = @"No data is currently available. Please pull down to refresh.";
-        messageLabel.textColor = [UIColor blackColor];
-        messageLabel.numberOfLines = 0;
-        messageLabel.textAlignment = NSTextAlignmentCenter;
-        [messageLabel sizeToFit];
-        
-        self.tableView.backgroundView = messageLabel;
-        self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+        if (self.feed) {
+            UILabel *messageLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
+            
+            messageLabel.text = @"No feeds are currently available. Please pull down to refresh.";
+            messageLabel.textColor = [UIColor blackColor];
+            messageLabel.numberOfLines = 0;
+            messageLabel.textAlignment = NSTextAlignmentCenter;
+            [messageLabel sizeToFit];
+            
+            self.tableView.backgroundView = messageLabel;
+            self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+        }
     }
     
     return 0;
