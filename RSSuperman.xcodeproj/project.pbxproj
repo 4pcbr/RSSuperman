@@ -21,6 +21,10 @@
 		5D066BD61AF91FA500DC2657 /* RSSController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D066BD51AF91FA500DC2657 /* RSSController.m */; };
 		5D066BE61AF93B3400DC2657 /* Feed.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D066BE51AF93B3400DC2657 /* Feed.m */; };
 		5D066BE91AF93B3400DC2657 /* Post.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D066BE81AF93B3400DC2657 /* Post.m */; };
+		5D066BEC1AFE950700DC2657 /* FeedPostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D066BEB1AFE950700DC2657 /* FeedPostViewController.m */; };
+		5D066BEF1AFEC53200DC2657 /* post.html in Resources */ = {isa = PBXBuildFile; fileRef = 5D066BEE1AFEC53200DC2657 /* post.html */; };
+		5D066BF11AFEC5DF00DC2657 /* bootstrap.css in Resources */ = {isa = PBXBuildFile; fileRef = 5D066BF01AFEC5DF00DC2657 /* bootstrap.css */; };
+		5D066BF31AFEC63D00DC2657 /* style.css in Resources */ = {isa = PBXBuildFile; fileRef = 5D066BF21AFEC63D00DC2657 /* style.css */; };
 		F613E1AE6B32314CA7C422ED /* libPods-RSSuperman.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F172D892DCE21507FE12BCAD /* libPods-RSSuperman.a */; };
 /* End PBXBuildFile section */
 
@@ -61,6 +65,11 @@
 		5D066BE51AF93B3400DC2657 /* Feed.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Feed.m; sourceTree = "<group>"; };
 		5D066BE71AF93B3400DC2657 /* Post.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Post.h; sourceTree = "<group>"; };
 		5D066BE81AF93B3400DC2657 /* Post.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Post.m; sourceTree = "<group>"; };
+		5D066BEA1AFE950700DC2657 /* FeedPostViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedPostViewController.h; sourceTree = "<group>"; };
+		5D066BEB1AFE950700DC2657 /* FeedPostViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedPostViewController.m; sourceTree = "<group>"; };
+		5D066BEE1AFEC53200DC2657 /* post.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = post.html; sourceTree = "<group>"; };
+		5D066BF01AFEC5DF00DC2657 /* bootstrap.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = bootstrap.css; sourceTree = "<group>"; };
+		5D066BF21AFEC63D00DC2657 /* style.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = style.css; sourceTree = "<group>"; };
 		F172D892DCE21507FE12BCAD /* libPods-RSSuperman.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-RSSuperman.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F23D29AAA98C434D1B7039AE /* Pods-RSSuperman.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RSSuperman.release.xcconfig"; path = "Pods/Target Support Files/Pods-RSSuperman/Pods-RSSuperman.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -115,6 +124,7 @@
 		5D066B871AF81BE200DC2657 /* RSSuperman */ = {
 			isa = PBXGroup;
 			children = (
+				5D066BED1AFEC51D00DC2657 /* Web */,
 				5D066BDD1AF93AE800DC2657 /* Data */,
 				5D066BB61AF81DD500DC2657 /* Model */,
 				5D066BB51AF81CFD00DC2657 /* ViewControllers */,
@@ -172,6 +182,8 @@
 				5D066B961AF81BE200DC2657 /* DetailViewController.m */,
 				5D066BBF1AF8211A00DC2657 /* TextInputViewController.h */,
 				5D066BC01AF8211A00DC2657 /* TextInputViewController.m */,
+				5D066BEA1AFE950700DC2657 /* FeedPostViewController.h */,
+				5D066BEB1AFE950700DC2657 /* FeedPostViewController.m */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -195,6 +207,16 @@
 				5D066BD51AF91FA500DC2657 /* RSSController.m */,
 			);
 			name = Data;
+			sourceTree = "<group>";
+		};
+		5D066BED1AFEC51D00DC2657 /* Web */ = {
+			isa = PBXGroup;
+			children = (
+				5D066BF01AFEC5DF00DC2657 /* bootstrap.css */,
+				5D066BEE1AFEC53200DC2657 /* post.html */,
+				5D066BF21AFEC63D00DC2657 /* style.css */,
+			);
+			name = Web;
 			sourceTree = "<group>";
 		};
 		894DAC958016C7B97EFDD655 /* Pods */ = {
@@ -289,8 +311,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				5D066BBE1AF81E4800DC2657 /* TextInput.storyboard in Resources */,
+				5D066BEF1AFEC53200DC2657 /* post.html in Resources */,
+				5D066BF31AFEC63D00DC2657 /* style.css in Resources */,
 				5D066B9A1AF81BE200DC2657 /* Main.storyboard in Resources */,
 				5D066B9F1AF81BE200DC2657 /* LaunchScreen.xib in Resources */,
+				5D066BF11AFEC5DF00DC2657 /* bootstrap.css in Resources */,
 				5D066B9C1AF81BE200DC2657 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -350,6 +375,7 @@
 				5D066BD61AF91FA500DC2657 /* RSSController.m in Sources */,
 				5D066B8E1AF81BE200DC2657 /* AppDelegate.m in Sources */,
 				5D066B8B1AF81BE200DC2657 /* main.m in Sources */,
+				5D066BEC1AFE950700DC2657 /* FeedPostViewController.m in Sources */,
 				5D066B911AF81BE200DC2657 /* RSSuperman.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

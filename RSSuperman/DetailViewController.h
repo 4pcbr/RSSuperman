@@ -15,7 +15,9 @@
 typedef void(^FeedUpdatedHandler)(MWFeedInfo *feedInfo, NSArray *feedItems);
 
 @interface DetailViewController : UITableViewController
+
 @property (strong, nonatomic) Feed *feed;
 @property (copy, nonatomic) FeedUpdatedHandler onFeedUpdated;
+
 @end
 

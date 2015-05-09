@@ -7,6 +7,7 @@
 //
 
 #import "DetailViewController.h"
+#import "FeedPostViewController.h"
 #import "Feed.h"
 #import "Post.h"
 #import "RSSController.h"
@@ -15,6 +16,7 @@
 @interface DetailViewController ()
 @property (strong, nonatomic) UIRefreshControl *refreshControl;
 @property (strong, nonatomic) RSSController    *rssController;
+@property (strong, nonatomic) NSArray *feedPosts;
 @end
 
 @implementation DetailViewController
@@ -38,6 +40,14 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    if (self.feed) {
+        self.feedPosts = [[self.feed.posts allObjects] sortedArrayUsingComparator:^NSComparisonResult(Post *feed1, Post *feed2) {
+            return (feed1.date > feed2.date) ?
+                NSOrderedAscending : (feed1.date < feed2.date) ?
+                    NSOrderedDescending : NSOrderedSame;
+        }];
+    }
     
     self.refreshControl = [[UIRefreshControl alloc] init];
     self.refreshControl.backgroundColor = [UIColor purpleColor];
@@ -79,7 +89,7 @@
 #pragma mark - Table view
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    if ([self.feed.posts count]) {
+    if ([self.feedPosts count]) {
         self.tableView.backgroundView = nil;
         self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
         return 1;
@@ -101,7 +111,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (self.feed) {
-        return [[self.feed.posts allObjects] count];
+        return [self.feedPosts count];
     } else {
         return 0;
     }
@@ -115,8 +125,22 @@
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
     if (self.feed) {
-        Post *feedPost = [[self.feed.posts allObjects] objectAtIndex:[indexPath row]];
+        Post *feedPost = [self.feedPosts objectAtIndex:[indexPath row]];
         cell.textLabel.text = feedPost.title;
+    }
+}
+
+#pragma mark - Segues
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if (self.feed == nil) {
+        return;
+    }
+    if ([[segue identifier] isEqualToString:@"showFeedPost"]) {
+        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+        Post *feedPost = [self.feedPosts objectAtIndex:[indexPath row]];
+        FeedPostViewController *feedPostVC = (FeedPostViewController *)[[segue destinationViewController] topViewController];
+        [feedPostVC setFeedPost:feedPost];
     }
 }
 
