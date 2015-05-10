@@ -1,5 +1,5 @@
 //
-//  Feed.m
+//  Feed+Favicon.h
 //  RSSuperman
 //
 //  Created by Olegs on 10/05/15.
@@ -7,15 +7,9 @@
 //
 
 #import "Feed.h"
-#import "Post.h"
 
+@interface Feed (Favicon)
 
-@implementation Feed
-
-@dynamic link;
-@dynamic summary;
-@dynamic title;
-@dynamic updatedAt;
-@dynamic posts;
+- (NSURL *)getFeedFavIconURL;
 
 @end

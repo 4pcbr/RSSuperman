@@ -14,7 +14,7 @@
 #import "FeedViewCell.h"
 #import "Feed.h"
 #import "Post.h"
-
+#import "NSString+Digest.h"
 #import "RSSController.h"
 
 @interface MasterViewController ()
@@ -122,6 +122,8 @@
     NSString *entityName = @"Post";
     NSString *sortAttr = @"date";
     
+    NSString *feedIdentifier = [feedItem.identifier length] ? feedItem.identifier : [feedItem.link sha1];
+    
     NSFetchRequest *fetchRequest    = [NSFetchRequest new];
     NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
     NSEntityDescription *entity     = [NSEntityDescription entityForName:entityName
@@ -129,7 +131,7 @@
                                        ];
     [fetchRequest setEntity:entity];
     
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"identifier == %@", feedItem.identifier];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"identifier == %@", feedIdentifier];
     [fetchRequest setPredicate:predicate];
     
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:sortAttr
@@ -162,7 +164,7 @@
     post.date       = feedItem.date;
     post.summary    = feedItem.summary;
     post.content    = feedItem.content;
-    post.identifier = [feedItem.identifier length] ? feedItem.identifier : feedItem.link;
+    post.identifier = feedIdentifier;
     
     return post;
 }
@@ -315,7 +317,7 @@
             break;
             
         case NSFetchedResultsChangeUpdate:
-            [self configureCell:[tableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
+            [self configureCell:(FeedViewCell *)[tableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
             break;
             
         case NSFetchedResultsChangeMove:

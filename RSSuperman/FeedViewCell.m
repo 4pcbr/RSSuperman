@@ -8,6 +8,7 @@
 
 #import "FeedViewCell.h"
 #import "Feed.h"
+#import "Feed+Favicon.h"
 
 @interface FeedViewCell ()
 @property (weak, nonatomic) IBOutlet UIImageView *feedFavicon;

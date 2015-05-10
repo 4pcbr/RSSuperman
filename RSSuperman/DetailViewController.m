@@ -31,9 +31,7 @@
 }
 
 - (void)configureView {
-    // Update the user interface for the detail item.
     if (self.feed) {
-//        self.detailDescriptionLabel.text = self.feed.title;
         self.title = self.feed.title;
     }
 }
@@ -42,12 +40,7 @@
     [super viewDidLoad];
     
     if (self.feed) {
-        self.feedPosts = [[self.feed.posts allObjects] sortedArrayUsingComparator:^NSComparisonResult(Post *feed1, Post *feed2) {
-            return (feed1.date > feed2.date) ?
-                NSOrderedAscending : (feed1.date < feed2.date) ?
-                    NSOrderedDescending : NSOrderedSame;
-        }];
-        
+        [self reloadFeedPosts];
         self.refreshControl = [[UIRefreshControl alloc] init];
         self.refreshControl.backgroundColor = [UIColor purpleColor];
         self.refreshControl.tintColor = [UIColor whiteColor];
@@ -59,8 +52,15 @@
     [self configureView];
 }
 
+- (void)reloadFeedPosts {
+    self.feedPosts = [[self.feed.posts allObjects] sortedArrayUsingComparator:^NSComparisonResult(Post *feed1, Post *feed2) {
+        return (feed1.date > feed2.date) ?
+        NSOrderedAscending : (feed1.date < feed2.date) ?
+        NSOrderedDescending : NSOrderedSame;
+    }];
+}
+
 - (void)updateFeed {
-    // TODO: implement me!
     if (self.feed) {
         self.rssController = [[RSSController alloc] initWithFeedURL:self.feed.link];
         __weak DetailViewController *weakSelf = self;
@@ -70,6 +70,7 @@
                     weakSelf.onFeedUpdated(weakSelf.rssController.feedInfo, weakSelf.rssController.feedItems);
                 }
                 [weakSelf.refreshControl endRefreshing];
+                [weakSelf reloadFeedPosts];
                 [weakSelf.tableView reloadData];
             }
         }).catch(^(NSError *error) {
@@ -113,6 +114,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (self.feed) {
+        NSLog(@"Feed count: %ld", [self.feedPosts count]);
         return [self.feedPosts count];
     } else {
         return 0;

@@ -2,7 +2,7 @@
 //  Post.m
 //  RSSuperman
 //
-//  Created by Olegs on 05/05/15.
+//  Created by Olegs on 10/05/15.
 //  Copyright (c) 2015 Brand New Heroes. All rights reserved.
 //
 
@@ -12,15 +12,15 @@
 
 @implementation Post
 
-@dynamic read;
-@dynamic title;
-@dynamic link;
 @dynamic author;
-@dynamic date;
-@dynamic updatedAt;
-@dynamic summary;
 @dynamic content;
+@dynamic date;
 @dynamic identifier;
+@dynamic link;
+@dynamic read;
+@dynamic summary;
+@dynamic title;
+@dynamic updatedAt;
 @dynamic feed;
 
 @end

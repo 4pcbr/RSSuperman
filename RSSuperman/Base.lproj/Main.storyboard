@@ -152,7 +152,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Feed title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W9A-xc-soL">
-                                            <rect key="frame" x="32" y="11" width="491" height="21"/>
+                                            <rect key="frame" x="32" y="11" width="71" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
@@ -160,7 +160,7 @@
                                     </subviews>
                                     <constraints>
                                         <constraint firstAttribute="centerY" secondItem="W9A-xc-soL" secondAttribute="centerY" id="3Ly-Lj-R7r"/>
-                                        <constraint firstItem="E3f-5O-9XA" firstAttribute="leading" secondItem="W9A-xc-soL" secondAttribute="trailing" priority="750" constant="8" symbolic="YES" id="Bhb-sw-qDm"/>
+                                        <constraint firstItem="E3f-5O-9XA" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="W9A-xc-soL" secondAttribute="trailing" id="Bhb-sw-qDm"/>
                                         <constraint firstItem="W9A-xc-soL" firstAttribute="leading" secondItem="bdf-9i-mX4" secondAttribute="trailing" constant="8" symbolic="YES" id="Y7W-zn-KqC"/>
                                         <constraint firstItem="bdf-9i-mX4" firstAttribute="leading" secondItem="37f-cq-3Eg" secondAttribute="leadingMargin" id="iea-Dx-SV6"/>
                                         <constraint firstItem="E3f-5O-9XA" firstAttribute="trailing" secondItem="37f-cq-3Eg" secondAttribute="trailingMargin" id="pRS-VT-vP2"/>
