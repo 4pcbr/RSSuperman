@@ -28,6 +28,7 @@
 		5D066C051AFF5D6300DC2657 /* NSString+Digest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D066C041AFF5D6300DC2657 /* NSString+Digest.m */; };
 		5D066C131AFF9AAC00DC2657 /* Feed.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D066C121AFF9AAC00DC2657 /* Feed.m */; };
 		5D066C161AFF9AAD00DC2657 /* Post.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D066C151AFF9AAD00DC2657 /* Post.m */; };
+		5D066C191AFFB56900DC2657 /* PostViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D066C181AFFB56900DC2657 /* PostViewCell.m */; };
 		F613E1AE6B32314CA7C422ED /* libPods-RSSuperman.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F172D892DCE21507FE12BCAD /* libPods-RSSuperman.a */; };
 /* End PBXBuildFile section */
 
@@ -80,6 +81,8 @@
 		5D066C121AFF9AAC00DC2657 /* Feed.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Feed.m; sourceTree = "<group>"; };
 		5D066C141AFF9AAD00DC2657 /* Post.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Post.h; sourceTree = "<group>"; };
 		5D066C151AFF9AAD00DC2657 /* Post.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Post.m; sourceTree = "<group>"; };
+		5D066C171AFFB56900DC2657 /* PostViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostViewCell.h; sourceTree = "<group>"; };
+		5D066C181AFFB56900DC2657 /* PostViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostViewCell.m; sourceTree = "<group>"; };
 		F172D892DCE21507FE12BCAD /* libPods-RSSuperman.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-RSSuperman.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F23D29AAA98C434D1B7039AE /* Pods-RSSuperman.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RSSuperman.release.xcconfig"; path = "Pods/Target Support Files/Pods-RSSuperman/Pods-RSSuperman.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -237,6 +240,8 @@
 			children = (
 				5D066BF51AFED91900DC2657 /* FeedViewCell.h */,
 				5D066BF61AFED91900DC2657 /* FeedViewCell.m */,
+				5D066C171AFFB56900DC2657 /* PostViewCell.h */,
+				5D066C181AFFB56900DC2657 /* PostViewCell.m */,
 			);
 			name = ViewCells;
 			sourceTree = "<group>";
@@ -417,6 +422,7 @@
 				5D066BD61AF91FA500DC2657 /* RSSController.m in Sources */,
 				5D066B8E1AF81BE200DC2657 /* AppDelegate.m in Sources */,
 				5D066B8B1AF81BE200DC2657 /* main.m in Sources */,
+				5D066C191AFFB56900DC2657 /* PostViewCell.m in Sources */,
 				5D066BEC1AFE950700DC2657 /* FeedPostViewController.m in Sources */,
 				5D066BFB1AFF4B4F00DC2657 /* Feed+Favicon.m in Sources */,
 				5D066B911AF81BE200DC2657 /* RSSuperman.xcdatamodeld in Sources */,

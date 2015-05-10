@@ -29,12 +29,36 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="FeedPostCell" id="cn7-tH-OJt">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="FeedPostCell" id="cn7-tH-OJt" customClass="PostViewCell">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="cn7-tH-OJt" id="Ap0-rw-hA2">
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="FeedPostTitle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Lp-Vz-5wQ">
+                                            <rect key="frame" x="20" y="11" width="106" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="New" translatesAutoresizingMaskIntoConstraints="NO" id="XOZ-5Y-mzB">
+                                            <rect key="frame" x="558" y="11" width="22" height="22"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="22" id="OTY-lN-D4S"/>
+                                                <constraint firstAttribute="height" constant="22" id="mFR-Di-ELc"/>
+                                            </constraints>
+                                        </imageView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="centerY" secondItem="7Lp-Vz-5wQ" secondAttribute="centerY" id="E7I-0N-jB3"/>
+                                        <constraint firstAttribute="centerY" secondItem="XOZ-5Y-mzB" secondAttribute="centerY" id="EqW-n8-d8n"/>
+                                        <constraint firstItem="XOZ-5Y-mzB" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="7Lp-Vz-5wQ" secondAttribute="trailing" priority="750" id="F6K-aO-jLp"/>
+                                        <constraint firstItem="7Lp-Vz-5wQ" firstAttribute="leading" secondItem="Ap0-rw-hA2" secondAttribute="leading" constant="20" symbolic="YES" id="JHz-R4-grC"/>
+                                        <constraint firstAttribute="trailing" secondItem="XOZ-5Y-mzB" secondAttribute="trailing" constant="20" symbolic="YES" id="fkw-xu-rj1"/>
+                                    </constraints>
                                 </tableViewCellContentView>
                                 <connections>
+                                    <outlet property="feedPostTitle" destination="7Lp-Vz-5wQ" id="BsN-ax-3q8"/>
+                                    <outlet property="statusImage" destination="XOZ-5Y-mzB" id="28j-3o-dKD"/>
                                     <segue destination="Wwb-S9-Z0O" kind="show" identifier="showFeedPost" id="sDt-46-CUS"/>
                                 </connections>
                             </tableViewCell>
@@ -48,7 +72,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aKi-7r-18f" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="709" y="129"/>
+            <point key="canvasLocation" x="703" y="129"/>
         </scene>
         <!--Feed Post Controller-->
         <scene sceneID="jIz-9q-fWJ">
@@ -70,6 +94,16 @@
                                 <rect key="frame" x="0.0" y="556" width="600" height="44"/>
                                 <items>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="gvc-OB-P0P"/>
+                                    <barButtonItem image="New" id="VgQ-KA-aSh">
+                                        <connections>
+                                            <action selector="readButtonDidClick:" destination="d5F-iJ-NBn" id="XR6-Jk-z3U"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem image="Pin" id="sXf-UY-5vq">
+                                        <connections>
+                                            <action selector="pinButtonDidTap:" destination="d5F-iJ-NBn" id="Xwi-hv-nYB"/>
+                                        </connections>
+                                    </barButtonItem>
                                     <barButtonItem image="Favorite" id="tkf-PX-k7J">
                                         <connections>
                                             <action selector="favoriteButtonDidTap:" destination="d5F-iJ-NBn" id="Tdb-4X-Klu"/>
@@ -100,6 +134,8 @@
                     <connections>
                         <outlet property="favoriteButton" destination="tkf-PX-k7J" id="lxF-Uh-Wbv"/>
                         <outlet property="linkButton" destination="bd0-Tc-aLl" id="bfg-9V-drk"/>
+                        <outlet property="pinButton" destination="sXf-UY-5vq" id="WlO-ft-ZAJ"/>
+                        <outlet property="readButton" destination="VgQ-KA-aSh" id="0JI-km-KGm"/>
                         <outlet property="webView" destination="wki-Jh-ZDD" id="ySZ-Wr-Jjh"/>
                     </connections>
                 </viewController>
@@ -213,7 +249,9 @@
     </scenes>
     <resources>
         <image name="Favorite" width="22" height="22"/>
+        <image name="New" width="22" height="22"/>
         <image name="OpenInBrowser" width="22" height="22"/>
+        <image name="Pin" width="22" height="22"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="6S0-TO-JiA"/>

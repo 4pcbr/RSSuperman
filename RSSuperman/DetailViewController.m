@@ -8,6 +8,7 @@
 
 #import "DetailViewController.h"
 #import "FeedPostViewController.h"
+#import "PostViewCell.h"
 #import "Feed.h"
 #import "Post.h"
 #import "RSSController.h"
@@ -120,16 +121,16 @@
     }
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"FeedPostCell" forIndexPath:indexPath];
+- (PostViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    PostViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"FeedPostCell" forIndexPath:indexPath];
     [self configureCell:cell atIndexPath:indexPath];
     return cell;
 }
 
-- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+- (void)configureCell:(PostViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
     if (self.feed) {
         Post *feedPost = [self.feedPosts objectAtIndex:[indexPath row]];
-        cell.textLabel.text = feedPost.title;
+        [cell displayContentForPost:feedPost];
     }
 }
 

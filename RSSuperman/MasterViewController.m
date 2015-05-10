@@ -83,8 +83,13 @@
     self.detailViewController = (DetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(feedPostHasBeenFavorited:)
+                                             selector:@selector(feedPostDidChange:)
                                                  name:@"FeedPostHasBeenFavorited"
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(feedPostDidChange:)
+                                                 name:@"FeedPostHasBeenRead"
                                                object:nil];
 }
 
@@ -164,6 +169,9 @@
             post = [NSEntityDescription insertNewObjectForEntityForName:entityName
                                                  inManagedObjectContext:context
                     ];
+            post.isFavorite = [NSNumber numberWithBool:NO];
+            post.identifier = feedIdentifier;
+            post.read = [NSNumber numberWithBool:NO];
         } else {
             post = result[0];
         }
@@ -175,8 +183,6 @@
     post.date       = feedItem.date;
     post.summary    = [feedItem.summary stringByDecodingHTMLEntities];
     post.content    = [feedItem.content stringByDecodingHTMLEntities];
-    post.identifier = feedIdentifier;
-    post.isFavorite = [NSNumber numberWithBool:NO];
     
     return post;
 }
@@ -344,7 +350,7 @@
     [self.tableView endUpdates];
 }
 
-- (void)feedPostHasBeenFavorited:(NSNotification *)notification {
+- (void)feedPostDidChange:(NSNotification *)notification {
     NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
     NSError *error = nil;
     if (![context save:&error]) {

@@ -13,9 +13,19 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *linkButton;
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *favoriteButton;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *pinButton;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *readButton;
 @end
 
 @implementation FeedPostViewController
+
+- (IBAction)readButtonDidClick:(UIBarButtonItem *)sender {
+
+}
+
+- (IBAction)pinButtonDidTap:(UIBarButtonItem *)sender {
+
+}
 
 - (IBAction)favoriteButtonDidTap:(UIBarButtonItem *)sender {
     if (self.feedPost) {
@@ -73,7 +83,6 @@
 - (void)configureFavoriteButton {
     if (self.feedPost) {
         self.favoriteButton.enabled = YES;
-        NSLog(@"Feed post favorite: %d", [self.feedPost.isFavorite boolValue]);
         if ([self.feedPost.isFavorite boolValue]) {
             [self.favoriteButton setImage:[UIImage imageNamed:@"FavoriteActive"]];
         } else {
@@ -106,6 +115,31 @@
     [super viewDidLoad];
     self.automaticallyAdjustsScrollViewInsets = NO;
     [self configureView];
+}
+
+- (void) toggleReadButton {
+    // TODO: the animation doesn't work ((
+    __weak FeedPostViewController *weakSelf = self;
+    [UIView animateWithDuration:2.0f animations:^{
+        UIColor *currentColor = weakSelf.readButton.tintColor;
+        weakSelf.readButton.tintColor = [currentColor colorWithAlphaComponent:0.0f];
+    } completion:^(BOOL finished) {
+        if (weakSelf.feedPost) {
+            NSString *newImageName = [weakSelf.feedPost.read boolValue] ? @"Checked" : @"New";
+            weakSelf.readButton.image = [UIImage imageNamed:newImageName];
+            [UIView animateWithDuration:2.0f animations:^{
+                UIColor *currentColor = weakSelf.readButton.tintColor;
+                weakSelf.readButton.tintColor = [currentColor colorWithAlphaComponent:1.0f];
+            }];
+        }
+    }];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    self.feedPost.read = [NSNumber numberWithBool:YES];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"FeedPostHasBeenRead"
+                                                        object:self.feedPost];
+    [self toggleReadButton];
 }
 
 - (void)didReceiveMemoryWarning {
