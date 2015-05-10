@@ -54,10 +54,17 @@
 }
 
 - (void)reloadFeedPosts {
-    self.feedPosts = [[self.feed.posts allObjects] sortedArrayUsingComparator:^NSComparisonResult(Post *feed1, Post *feed2) {
-        return (feed1.date > feed2.date) ?
-        NSOrderedAscending : (feed1.date < feed2.date) ?
-        NSOrderedDescending : NSOrderedSame;
+    self.feedPosts = [[self.feed.posts allObjects] sortedArrayUsingComparator:^NSComparisonResult(Post *post1, Post *post2) {
+        
+        int v1 = [post1.isPinned intValue] || ([post1.isRead boolValue] ? 0 : 1);
+        v1 = v1 << 1;
+        v1 += post1.date > post2.date ? 1 : 0;
+        
+        int v2 = [post2.isPinned intValue] || ([post2.isRead boolValue] ? 0 : 1);
+        v2 = v2 << 1;
+        v2 += post2.date > post1.date ? 1 : 0;
+        
+        return [[NSNumber numberWithInt:v2] compare:[NSNumber numberWithInt:v1]];
     }];
 }
 
