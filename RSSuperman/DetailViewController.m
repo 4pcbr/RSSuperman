@@ -37,6 +37,11 @@
     }
 }
 
+- (void)feedPostDidChange:(NSNotification *)notification {
+    [self reloadFeedPosts];
+    [self.tableView reloadData];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -49,6 +54,11 @@
                                 action:@selector(updateFeed)
                       forControlEvents:UIControlEventValueChanged];
     }
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(feedPostDidChange:)
+                                                 name:@"FeedPostDidChange"
+                                               object:nil];
     
     [self configureView];
 }

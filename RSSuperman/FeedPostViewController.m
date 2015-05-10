@@ -22,14 +22,15 @@
 - (IBAction)readButtonDidClick:(UIBarButtonItem *)sender {
     if (self.feedPost) {
         self.feedPost.isRead = [NSNumber numberWithBool:(![self.feedPost.isRead boolValue])];
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"FeedPostHasBeenRead" object:self.feedPost];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"FeedPostDidChange"
+                                                            object:self.feedPost];
     }
 }
 
 - (IBAction)pinButtonDidTap:(UIBarButtonItem *)sender {
     if (self.feedPost) {
         self.feedPost.isPinned = [NSNumber numberWithBool:(![self.feedPost.isPinned boolValue])];
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"FeedPostHasBeenPinned"
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"FeedPostDidChange"
                                                             object:self.feedPost];
     }
 }
@@ -41,7 +42,7 @@
         } else {
             self.feedPost.isFavorite = [NSNumber numberWithBool:YES];
         }
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"FeedPostHasBeenFavorited"
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"FeedPostDidChange"
                                                             object:self.feedPost];
         [self configureToolbar];
     }
@@ -141,17 +142,8 @@
     self.automaticallyAdjustsScrollViewInsets = NO;
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(feedPostDidChange:)
-                                                 name:@"FeedPostHasBeenRead"
+                                                 name:@"FeedPostDidChange"
                                                object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(feedPostDidChange:)
-                                                 name:@"FeedPostHasBeenPinned"
-                                               object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(feedPostDidChange:)
-                                                 name:@"FeedPostHasBeenFavorited"
-                                               object:nil];
-
     [self configureView];
 }
 
@@ -180,7 +172,7 @@
 - (void)viewDidAppear:(BOOL)animated {
     if (self.feedPost && ([self.feedPost.isRead boolValue] != YES)) {
         self.feedPost.isRead = [NSNumber numberWithBool:YES];
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"FeedPostHasBeenRead"
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"FeedPostDidChange"
                                                             object:self.feedPost];
         [self toggleReadButton];
     }

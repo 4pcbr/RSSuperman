@@ -84,12 +84,7 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(feedPostDidChange:)
-                                                 name:@"FeedPostHasBeenFavorited"
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(feedPostDidChange:)
-                                                 name:@"FeedPostHasBeenRead"
+                                                 name:@"FeedPostDidChange"
                                                object:nil];
 }
 

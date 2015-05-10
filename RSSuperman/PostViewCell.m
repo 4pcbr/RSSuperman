@@ -38,26 +38,12 @@
     self.feedPostIdentifier = feedPost.identifier;
     
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(feedPostHasBeenFavorited:)
-                                                 name:@"FeedPostHasBeenFavorited"
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(feedPostHasBeenRead:)
-                                                 name:@"FeedPostHasBeenRead"
+                                             selector:@selector(feedPostDidChange:)
+                                                 name:@"FeedPostDidChange"
                                                object:nil];
 }
 
-- (void)feedPostHasBeenFavorited:(NSNotification *)notification {
-    Post *feedPost = (Post *)[notification object];
-    if (feedPost != nil) {
-        if ([feedPost.identifier isEqualToString:self.feedPostIdentifier]) {
-            [self configureView:feedPost];
-        }
-    }
-}
-
-- (void)feedPostHasBeenRead:(NSNotification *)notification {
+- (void)feedPostDidChange:(NSNotification *)notification {
     Post *feedPost = (Post *)[notification object];
     if (feedPost != nil) {
         if ([feedPost.identifier isEqualToString:self.feedPostIdentifier]) {
