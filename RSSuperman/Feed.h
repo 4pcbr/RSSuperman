@@ -27,4 +27,6 @@
 - (void)addPosts:(NSSet *)values;
 - (void)removePosts:(NSSet *)values;
 
+- (NSURL *)getFeedFavIconURL;
+
 @end

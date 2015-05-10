@@ -18,4 +18,11 @@
 @dynamic summary;
 @dynamic posts;
 
+- (NSURL *)getFeedFavIconURL {
+    NSString *baseURLHost = [[NSURL URLWithString:self.link] host];
+    NSURL *faviconURL = [NSURL URLWithString:[NSString stringWithFormat:@"http://www.google.com/s2/favicons?domain=%@", baseURLHost]];
+
+    return faviconURL;
+}
+
 @end

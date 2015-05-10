@@ -58,11 +58,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "RSSuperman/MasterViewController.m"
-            timestampString = "452730973.282165"
+            timestampString = "452910442.506361"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "141"
-            endingLineNumber = "141"
+            startingLineNumber = "142"
+            endingLineNumber = "142"
             landmarkName = "-insertOrUpdateFeedPost:"
             landmarkType = "5">
          </BreakpointContent>

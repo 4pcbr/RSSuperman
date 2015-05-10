@@ -11,6 +11,7 @@
 #import "MasterViewController.h"
 #import "DetailViewController.h"
 #import "TextInputViewController.h"
+#import "FeedViewCell.h"
 #import "Feed.h"
 #import "Post.h"
 
@@ -161,7 +162,7 @@
     post.date       = feedItem.date;
     post.summary    = feedItem.summary;
     post.content    = feedItem.content;
-    post.identifier = feedItem.identifier;
+    post.identifier = [feedItem.identifier length] ? feedItem.identifier : feedItem.link;
     
     return post;
 }
@@ -206,7 +207,7 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
+    FeedViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"FeedCell" forIndexPath:indexPath];
     [self configureCell:cell atIndexPath:indexPath];
     return cell;
 }
@@ -231,9 +232,10 @@
     }
 }
 
-- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+- (void)configureCell:(FeedViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
     Feed *feed = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    cell.textLabel.text = feed.title;
+    [cell displayContentForFeed:feed];
+//    NSLog(@"Feed favicon URL: %@", [feed getFeedFavIconURL]);
 }
 
 #pragma mark - Fetched results controller
