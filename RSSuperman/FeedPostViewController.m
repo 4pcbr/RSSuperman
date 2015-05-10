@@ -101,6 +101,12 @@
         } else {
             self.linkButton.enabled = NO;
         }
+        
+        if ([self.feedPost.read boolValue]) {
+            self.readButton.image = [UIImage imageNamed:@"Checked"];
+        } else {
+            self.readButton.image = [UIImage imageNamed:@"New"];
+        }
 
         [self loadWebViewContent];
     } else {
@@ -136,10 +142,12 @@
 }
 
 - (void)viewDidAppear:(BOOL)animated {
-    self.feedPost.read = [NSNumber numberWithBool:YES];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"FeedPostHasBeenRead"
-                                                        object:self.feedPost];
-    [self toggleReadButton];
+    if (self.feedPost && ([self.feedPost.read boolValue] != YES)) {
+        self.feedPost.read = [NSNumber numberWithBool:YES];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"FeedPostHasBeenRead"
+                                                            object:self.feedPost];
+        [self toggleReadButton];
+    }
 }
 
 - (void)didReceiveMemoryWarning {
