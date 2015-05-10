@@ -16,6 +16,7 @@
 @dynamic content;
 @dynamic date;
 @dynamic identifier;
+@dynamic isFavorite;
 @dynamic link;
 @dynamic read;
 @dynamic summary;

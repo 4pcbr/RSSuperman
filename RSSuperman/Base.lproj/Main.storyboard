@@ -62,30 +62,44 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <webView contentMode="scaleToFill" scalesPageToFit="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JpS-As-b4b">
-                                <rect key="frame" x="0.0" y="64" width="600" height="536"/>
+                            <webView contentMode="scaleToFill" scalesPageToFit="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wki-Jh-ZDD">
+                                <rect key="frame" x="0.0" y="64" width="600" height="492"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" address="YES"/>
                             </webView>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eSY-Cn-eYB">
+                                <rect key="frame" x="0.0" y="556" width="600" height="44"/>
+                                <items>
+                                    <barButtonItem image="Favorite" id="tkf-PX-k7J">
+                                        <connections>
+                                            <action selector="favoriteButtonDidTap:" destination="d5F-iJ-NBn" id="Tdb-4X-Klu"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="JpS-As-b4b" firstAttribute="leading" secondItem="2UY-2Q-7YJ" secondAttribute="leading" id="CIM-18-wfp"/>
-                            <constraint firstAttribute="trailing" secondItem="JpS-As-b4b" secondAttribute="trailing" id="Fi7-7Q-Oia"/>
-                            <constraint firstAttribute="bottom" secondItem="JpS-As-b4b" secondAttribute="bottom" id="VHD-a4-mHa"/>
-                            <constraint firstItem="JpS-As-b4b" firstAttribute="top" secondItem="w5O-yY-dzY" secondAttribute="bottom" id="ibQ-dc-L2f"/>
+                            <constraint firstAttribute="trailing" secondItem="wki-Jh-ZDD" secondAttribute="trailing" id="B82-Eg-113"/>
+                            <constraint firstItem="wki-Jh-ZDD" firstAttribute="top" secondItem="w5O-yY-dzY" secondAttribute="bottom" id="J2p-12-eLP"/>
+                            <constraint firstItem="wki-Jh-ZDD" firstAttribute="leading" secondItem="2UY-2Q-7YJ" secondAttribute="leading" id="X5Q-Qd-5VN"/>
+                            <constraint firstItem="eSY-Cn-eYB" firstAttribute="top" secondItem="wki-Jh-ZDD" secondAttribute="bottom" id="Xea-EK-PH6"/>
+                            <constraint firstItem="5Fr-Xf-FqZ" firstAttribute="top" secondItem="eSY-Cn-eYB" secondAttribute="bottom" id="dFG-0i-UM9"/>
+                            <constraint firstItem="eSY-Cn-eYB" firstAttribute="leading" secondItem="2UY-2Q-7YJ" secondAttribute="leading" id="e4C-Sd-nGp"/>
+                            <constraint firstAttribute="centerX" secondItem="eSY-Cn-eYB" secondAttribute="centerX" id="gGf-MX-die"/>
+                            <constraint firstAttribute="trailing" secondItem="eSY-Cn-eYB" secondAttribute="trailing" id="zsl-cK-rxh"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="hMJ-Mu-TcX">
-                        <barButtonItem key="rightBarButtonItem" enabled="NO" title="Open in Safari" id="bd0-Tc-aLl">
+                        <barButtonItem key="rightBarButtonItem" enabled="NO" image="OpenInBrowser" id="bd0-Tc-aLl">
                             <connections>
                                 <action selector="linkButtonDidTap:" destination="d5F-iJ-NBn" id="jgl-Ot-y6H"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="favoriteButton" destination="tkf-PX-k7J" id="lxF-Uh-Wbv"/>
                         <outlet property="linkButton" destination="bd0-Tc-aLl" id="bfg-9V-drk"/>
-                        <outlet property="webView" destination="JpS-As-b4b" id="z0h-Ji-Cqn"/>
+                        <outlet property="webView" destination="wki-Jh-ZDD" id="ySZ-Wr-Jjh"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ed2-pD-5DJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -145,14 +159,8 @@
                                                 <constraint firstAttribute="height" constant="16" id="lAb-Ru-ysA"/>
                                             </constraints>
                                         </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="updated at" textAlignment="right" lineBreakMode="clip" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E3f-5O-9XA">
-                                            <rect key="frame" x="531" y="14" width="61" height="15"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                            <color key="textColor" red="0.46146429438346498" green="0.0" blue="0.47591145833333337" alpha="1" colorSpace="calibratedRGB"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Feed title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W9A-xc-soL">
-                                            <rect key="frame" x="32" y="11" width="71" height="21"/>
+                                            <rect key="frame" x="32" y="11" width="548" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
@@ -160,11 +168,9 @@
                                     </subviews>
                                     <constraints>
                                         <constraint firstAttribute="centerY" secondItem="W9A-xc-soL" secondAttribute="centerY" id="3Ly-Lj-R7r"/>
-                                        <constraint firstItem="E3f-5O-9XA" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="W9A-xc-soL" secondAttribute="trailing" id="Bhb-sw-qDm"/>
+                                        <constraint firstAttribute="trailing" secondItem="W9A-xc-soL" secondAttribute="trailing" constant="20" symbolic="YES" id="Dvm-Wt-Hg0"/>
                                         <constraint firstItem="W9A-xc-soL" firstAttribute="leading" secondItem="bdf-9i-mX4" secondAttribute="trailing" constant="8" symbolic="YES" id="Y7W-zn-KqC"/>
                                         <constraint firstItem="bdf-9i-mX4" firstAttribute="leading" secondItem="37f-cq-3Eg" secondAttribute="leadingMargin" id="iea-Dx-SV6"/>
-                                        <constraint firstItem="E3f-5O-9XA" firstAttribute="trailing" secondItem="37f-cq-3Eg" secondAttribute="trailingMargin" id="pRS-VT-vP2"/>
-                                        <constraint firstAttribute="centerY" secondItem="E3f-5O-9XA" secondAttribute="centerY" id="qyc-Pb-Bhy"/>
                                         <constraint firstAttribute="centerY" secondItem="bdf-9i-mX4" secondAttribute="centerY" id="x57-Si-fmc"/>
                                     </constraints>
                                 </tableViewCellContentView>
@@ -172,7 +178,6 @@
                                 <connections>
                                     <outlet property="feedFavicon" destination="bdf-9i-mX4" id="gk3-Xp-bPG"/>
                                     <outlet property="feedTitle" destination="W9A-xc-soL" id="u2x-3A-X55"/>
-                                    <outlet property="updatedAtTitle" destination="E3f-5O-9XA" id="sd7-Kw-FDQ"/>
                                     <segue destination="vC3-pB-5Vb" kind="showDetail" identifier="showDetail" id="6S0-TO-JiA"/>
                                 </connections>
                             </tableViewCell>
@@ -205,6 +210,10 @@
             <point key="canvasLocation" x="-45" y="129"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="Favorite" width="22" height="22"/>
+        <image name="OpenInBrowser" width="22" height="22"/>
+    </resources>
     <inferredMetricsTieBreakers>
         <segue reference="6S0-TO-JiA"/>
     </inferredMetricsTieBreakers>

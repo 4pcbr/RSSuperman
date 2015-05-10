@@ -42,7 +42,7 @@
     if (self.feed) {
         [self reloadFeedPosts];
         self.refreshControl = [[UIRefreshControl alloc] init];
-        self.refreshControl.backgroundColor = [UIColor purpleColor];
+        self.refreshControl.backgroundColor = [UIColor darkGrayColor];
         self.refreshControl.tintColor = [UIColor whiteColor];
         [self.refreshControl addTarget:self
                                 action:@selector(updateFeed)
@@ -114,7 +114,6 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (self.feed) {
-        NSLog(@"Feed count: %ld", [self.feedPosts count]);
         return [self.feedPosts count];
     } else {
         return 0;

@@ -12,9 +12,14 @@
 @interface FeedPostViewController ()
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *linkButton;
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *favoriteButton;
 @end
 
 @implementation FeedPostViewController
+
+- (IBAction)favoriteButtonDidTap:(UIBarButtonItem *)sender {
+    
+}
 
 - (IBAction)linkButtonDidTap:(UIBarButtonItem *)sender {
     if (self.feedPost && self.feedPost.link) {
@@ -42,6 +47,19 @@
     [self.webView loadHTMLString:content baseURL:nil];
 }
 
+- (void)configureFavoriteButton {
+    if (self.feedPost) {
+        self.favoriteButton.enabled = YES;
+        if ([self.feedPost.isFavorite boolValue]) {
+            [self.favoriteButton setImage:[UIImage imageNamed:@"FavoriteActive"]];
+        } else {
+            [self.favoriteButton setImage:[UIImage imageNamed:@"Favorite"]];
+        }
+    } else {
+        self.favoriteButton.enabled = NO;
+    }
+}
+
 - (void)configureView {
     if (self.feedPost) {
         self.title = self.feedPost.title;
@@ -50,10 +68,13 @@
         } else {
             self.linkButton.enabled = NO;
         }
+
         [self loadWebViewContent];
     } else {
         self.linkButton.enabled = NO;
     }
+    
+    [self configureFavoriteButton];
 }
 
 

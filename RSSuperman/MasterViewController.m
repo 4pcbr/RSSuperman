@@ -8,6 +8,7 @@
 
 #import <PromiseKit/Promise.h>
 #import <MWFeedParser.h>
+#import <NSString+HTML.h>
 #import "MasterViewController.h"
 #import "DetailViewController.h"
 #import "TextInputViewController.h"
@@ -100,8 +101,8 @@
 
     NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
     
-    feed.title     = feedInfo.title;
-    feed.summary   = feedInfo.summary;
+    feed.title     = [feedInfo.title stringByDecodingHTMLEntities];
+    feed.summary   = [feedInfo.summary stringByDecodingHTMLEntities];
     feed.updatedAt = [NSDate new];
     
     for (MWFeedItem *feedItem in feedItems) {
@@ -158,13 +159,14 @@
         }
     }
     
-    post.title      = feedItem.title;
+    post.title      = [feedItem.title stringByDecodingHTMLEntities];
     post.link       = feedItem.link;
-    post.author     = feedItem.author;
+    post.author     = [feedItem.author stringByDecodingHTMLEntities];
     post.date       = feedItem.date;
-    post.summary    = feedItem.summary;
-    post.content    = feedItem.content;
+    post.summary    = [feedItem.summary stringByDecodingHTMLEntities];
+    post.content    = [feedItem.content stringByDecodingHTMLEntities];
     post.identifier = feedIdentifier;
+    post.isFavorite = [NSNumber numberWithBool:NO];
     
     return post;
 }

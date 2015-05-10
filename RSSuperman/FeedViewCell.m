@@ -13,8 +13,6 @@
 @interface FeedViewCell ()
 @property (weak, nonatomic) IBOutlet UIImageView *feedFavicon;
 @property (weak, nonatomic) IBOutlet UILabel *feedTitle;
-@property (weak, nonatomic) IBOutlet UILabel *updatedAtTitle;
-
 @end
 
 @implementation FeedViewCell
@@ -33,9 +31,9 @@
     NSData *imageData = [[NSData alloc] initWithContentsOfURL:[feed getFeedFavIconURL]];
     [self.feedFavicon setImage:[UIImage imageWithData:imageData]];
     self.feedTitle.text = feed.title;
-    NSDateFormatter *dateFormatter = [NSDateFormatter new];
-    [dateFormatter setDateFormat:@"dd MMMM hh:mm"];
-    self.updatedAtTitle.text = [dateFormatter stringFromDate:feed.updatedAt];
+//    NSDateFormatter *dateFormatter = [NSDateFormatter new];
+//    [dateFormatter setDateFormat:@"dd MMMM hh:mm"];
+//    self.updatedAtTitle.text = [dateFormatter stringFromDate:feed.updatedAt];
 }
 
 @end
