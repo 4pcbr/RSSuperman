@@ -22,7 +22,10 @@
     if ([feedPost.isRead boolValue] != YES) {
         self.statusImage.hidden = NO;
         self.statusImage.image = [UIImage imageNamed:@"New"];
-    } else if ([feedPost.isFavorite boolValue] == YES) {
+    } else if ([feedPost.isPinned boolValue]) {
+        self.statusImage.hidden = NO;
+        self.statusImage.image = [UIImage imageNamed:@"PinActive"];
+    } else if ([feedPost.isFavorite boolValue]) {
         self.statusImage.hidden = NO;
         self.statusImage.image = [UIImage imageNamed:@"FavoriteActive"];
     } else {
@@ -33,10 +36,12 @@
 - (void)displayContentForPost:(Post *)feedPost {
     [self configureView:feedPost];
     self.feedPostIdentifier = feedPost.identifier;
+    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(feedPostHasBeenFavorited:)
                                                  name:@"FeedPostHasBeenFavorited"
                                                object:nil];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(feedPostHasBeenRead:)
                                                  name:@"FeedPostHasBeenRead"

@@ -20,11 +20,18 @@
 @implementation FeedPostViewController
 
 - (IBAction)readButtonDidClick:(UIBarButtonItem *)sender {
-
+    if (self.feedPost) {
+        self.feedPost.isRead = [NSNumber numberWithBool:(![self.feedPost.isRead boolValue])];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"FeedPostHasBeenRead" object:self.feedPost];
+    }
 }
 
 - (IBAction)pinButtonDidTap:(UIBarButtonItem *)sender {
-
+    if (self.feedPost) {
+        self.feedPost.isPinned = [NSNumber numberWithBool:(![self.feedPost.isPinned boolValue])];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"FeedPostHasBeenPinned"
+                                                            object:self.feedPost];
+    }
 }
 
 - (IBAction)favoriteButtonDidTap:(UIBarButtonItem *)sender {
@@ -34,8 +41,9 @@
         } else {
             self.feedPost.isFavorite = [NSNumber numberWithBool:YES];
         }
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"FeedPostHasBeenFavorited" object:self.feedPost];
-        [self configureFavoriteButton];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"FeedPostHasBeenFavorited"
+                                                            object:self.feedPost];
+        [self configureToolbar];
     }
 }
 
@@ -80,32 +88,15 @@
                          baseURL:nil];
 }
 
-- (void)configureFavoriteButton {
-    if (self.feedPost) {
-        self.favoriteButton.enabled = YES;
-        if ([self.feedPost.isFavorite boolValue]) {
-            [self.favoriteButton setImage:[UIImage imageNamed:@"FavoriteActive"]];
-        } else {
-            [self.favoriteButton setImage:[UIImage imageNamed:@"Favorite"]];
-        }
-    } else {
-        self.favoriteButton.enabled = NO;
-    }
-}
-
 - (void)configureView {
     if (self.feedPost) {
+
         self.title = self.feedPost.title;
+
         if (self.feedPost.link) {
             self.linkButton.enabled = YES;
         } else {
             self.linkButton.enabled = NO;
-        }
-        
-        if ([self.feedPost.isRead boolValue]) {
-            self.readButton.image = [UIImage imageNamed:@"Checked"];
-        } else {
-            self.readButton.image = [UIImage imageNamed:@"New"];
         }
 
         [self loadWebViewContent];
@@ -113,14 +104,59 @@
         self.linkButton.enabled = NO;
     }
     
-    [self configureFavoriteButton];
+    [self configureToolbar];
 }
 
+- (void)configureToolbar {
+    if (self.feedPost) {
+        self.favoriteButton.enabled = YES;
+        if ([self.feedPost.isFavorite boolValue]) {
+            [self.favoriteButton setImage:[UIImage imageNamed:@"FavoriteActive"]];
+        } else {
+            [self.favoriteButton setImage:[UIImage imageNamed:@"Favorite"]];
+        }
+        self.pinButton.enabled = YES;
+        if ([self.feedPost.isPinned boolValue]) {
+            [self.pinButton setImage:[UIImage imageNamed:@"PinActive"]];
+        } else {
+            [self.pinButton setImage:[UIImage imageNamed:@"Pin"]];
+        }
+        self.readButton.enabled = YES;
+        if ([self.feedPost.isRead boolValue]) {
+            self.readButton.image = [UIImage imageNamed:@"Checked"];
+        } else {
+            self.readButton.image = [UIImage imageNamed:@"New"];
+        }
+    } else {
+        self.favoriteButton.enabled = NO;
+    }
+}
+
+- (void)feedPostDidChange:(NSNotification *)notification {
+    [self configureToolbar];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.automaticallyAdjustsScrollViewInsets = NO;
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(feedPostDidChange:)
+                                                 name:@"FeedPostHasBeenRead"
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(feedPostDidChange:)
+                                                 name:@"FeedPostHasBeenPinned"
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(feedPostDidChange:)
+                                                 name:@"FeedPostHasBeenFavorited"
+                                               object:nil];
+
     [self configureView];
+}
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void) toggleReadButton {
