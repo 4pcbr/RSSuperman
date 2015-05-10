@@ -102,7 +102,7 @@
             self.linkButton.enabled = NO;
         }
         
-        if ([self.feedPost.read boolValue]) {
+        if ([self.feedPost.isRead boolValue]) {
             self.readButton.image = [UIImage imageNamed:@"Checked"];
         } else {
             self.readButton.image = [UIImage imageNamed:@"New"];
@@ -131,7 +131,7 @@
         weakSelf.readButton.tintColor = [currentColor colorWithAlphaComponent:0.0f];
     } completion:^(BOOL finished) {
         if (weakSelf.feedPost) {
-            NSString *newImageName = [weakSelf.feedPost.read boolValue] ? @"Checked" : @"New";
+            NSString *newImageName = [weakSelf.feedPost.isRead boolValue] ? @"Checked" : @"New";
             weakSelf.readButton.image = [UIImage imageNamed:newImageName];
             [UIView animateWithDuration:2.0f animations:^{
                 UIColor *currentColor = weakSelf.readButton.tintColor;
@@ -142,8 +142,8 @@
 }
 
 - (void)viewDidAppear:(BOOL)animated {
-    if (self.feedPost && ([self.feedPost.read boolValue] != YES)) {
-        self.feedPost.read = [NSNumber numberWithBool:YES];
+    if (self.feedPost && ([self.feedPost.isRead boolValue] != YES)) {
+        self.feedPost.isRead = [NSNumber numberWithBool:YES];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"FeedPostHasBeenRead"
                                                             object:self.feedPost];
         [self toggleReadButton];

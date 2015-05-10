@@ -17,8 +17,9 @@
 @dynamic date;
 @dynamic identifier;
 @dynamic isFavorite;
+@dynamic isPinned;
 @dynamic link;
-@dynamic read;
+@dynamic isRead;
 @dynamic summary;
 @dynamic title;
 @dynamic updatedAt;

@@ -26,9 +26,9 @@
 		5D066BF71AFED91900DC2657 /* FeedViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D066BF61AFED91900DC2657 /* FeedViewCell.m */; };
 		5D066BFB1AFF4B4F00DC2657 /* Feed+Favicon.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D066BFA1AFF4B4F00DC2657 /* Feed+Favicon.m */; };
 		5D066C051AFF5D6300DC2657 /* NSString+Digest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D066C041AFF5D6300DC2657 /* NSString+Digest.m */; };
-		5D066C131AFF9AAC00DC2657 /* Feed.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D066C121AFF9AAC00DC2657 /* Feed.m */; };
-		5D066C161AFF9AAD00DC2657 /* Post.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D066C151AFF9AAD00DC2657 /* Post.m */; };
 		5D066C191AFFB56900DC2657 /* PostViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D066C181AFFB56900DC2657 /* PostViewCell.m */; };
+		5D066C241AFFE9BF00DC2657 /* Feed.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D066C231AFFE9BF00DC2657 /* Feed.m */; };
+		5D066C271AFFE9C000DC2657 /* Post.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D066C261AFFE9C000DC2657 /* Post.m */; };
 		F613E1AE6B32314CA7C422ED /* libPods-RSSuperman.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F172D892DCE21507FE12BCAD /* libPods-RSSuperman.a */; };
 /* End PBXBuildFile section */
 
@@ -77,12 +77,14 @@
 		5D066C031AFF5D6300DC2657 /* NSString+Digest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Digest.h"; sourceTree = "<group>"; };
 		5D066C041AFF5D6300DC2657 /* NSString+Digest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Digest.m"; sourceTree = "<group>"; };
 		5D066C0A1AFF8F4F00DC2657 /* RSSuperman2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = RSSuperman2.xcdatamodel; sourceTree = "<group>"; };
-		5D066C111AFF9AAC00DC2657 /* Feed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Feed.h; sourceTree = "<group>"; };
-		5D066C121AFF9AAC00DC2657 /* Feed.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Feed.m; sourceTree = "<group>"; };
-		5D066C141AFF9AAD00DC2657 /* Post.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Post.h; sourceTree = "<group>"; };
-		5D066C151AFF9AAD00DC2657 /* Post.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Post.m; sourceTree = "<group>"; };
 		5D066C171AFFB56900DC2657 /* PostViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostViewCell.h; sourceTree = "<group>"; };
 		5D066C181AFFB56900DC2657 /* PostViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostViewCell.m; sourceTree = "<group>"; };
+		5D066C1A1AFFE89900DC2657 /* RSSuperman3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = RSSuperman3.xcdatamodel; sourceTree = "<group>"; };
+		5D066C211AFFE98600DC2657 /* RSSuperman4.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = RSSuperman4.xcdatamodel; sourceTree = "<group>"; };
+		5D066C221AFFE9BF00DC2657 /* Feed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Feed.h; sourceTree = "<group>"; };
+		5D066C231AFFE9BF00DC2657 /* Feed.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Feed.m; sourceTree = "<group>"; };
+		5D066C251AFFE9C000DC2657 /* Post.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Post.h; sourceTree = "<group>"; };
+		5D066C261AFFE9C000DC2657 /* Post.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Post.m; sourceTree = "<group>"; };
 		F172D892DCE21507FE12BCAD /* libPods-RSSuperman.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-RSSuperman.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F23D29AAA98C434D1B7039AE /* Pods-RSSuperman.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RSSuperman.release.xcconfig"; path = "Pods/Target Support Files/Pods-RSSuperman/Pods-RSSuperman.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -206,10 +208,10 @@
 		5D066BB61AF81DD500DC2657 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				5D066C141AFF9AAD00DC2657 /* Post.h */,
-				5D066C151AFF9AAD00DC2657 /* Post.m */,
-				5D066C111AFF9AAC00DC2657 /* Feed.h */,
-				5D066C121AFF9AAC00DC2657 /* Feed.m */,
+				5D066C251AFFE9C000DC2657 /* Post.h */,
+				5D066C261AFFE9C000DC2657 /* Post.m */,
+				5D066C221AFFE9BF00DC2657 /* Feed.h */,
+				5D066C231AFFE9BF00DC2657 /* Feed.m */,
 				5D066C091AFF828200DC2657 /* Categories */,
 				5D066B8F1AF81BE200DC2657 /* RSSuperman.xcdatamodeld */,
 			);
@@ -412,8 +414,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5D066C161AFF9AAD00DC2657 /* Post.m in Sources */,
-				5D066C131AFF9AAC00DC2657 /* Feed.m in Sources */,
 				5D066BC11AF8211A00DC2657 /* TextInputViewController.m in Sources */,
 				5D066B971AF81BE200DC2657 /* DetailViewController.m in Sources */,
 				5D066C051AFF5D6300DC2657 /* NSString+Digest.m in Sources */,
@@ -423,9 +423,11 @@
 				5D066B8E1AF81BE200DC2657 /* AppDelegate.m in Sources */,
 				5D066B8B1AF81BE200DC2657 /* main.m in Sources */,
 				5D066C191AFFB56900DC2657 /* PostViewCell.m in Sources */,
+				5D066C241AFFE9BF00DC2657 /* Feed.m in Sources */,
 				5D066BEC1AFE950700DC2657 /* FeedPostViewController.m in Sources */,
 				5D066BFB1AFF4B4F00DC2657 /* Feed+Favicon.m in Sources */,
 				5D066B911AF81BE200DC2657 /* RSSuperman.xcdatamodeld in Sources */,
+				5D066C271AFFE9C000DC2657 /* Post.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -641,10 +643,12 @@
 		5D066B8F1AF81BE200DC2657 /* RSSuperman.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				5D066C211AFFE98600DC2657 /* RSSuperman4.xcdatamodel */,
+				5D066C1A1AFFE89900DC2657 /* RSSuperman3.xcdatamodel */,
 				5D066C0A1AFF8F4F00DC2657 /* RSSuperman2.xcdatamodel */,
 				5D066B901AF81BE200DC2657 /* RSSuperman.xcdatamodel */,
 			);
-			currentVersion = 5D066C0A1AFF8F4F00DC2657 /* RSSuperman2.xcdatamodel */;
+			currentVersion = 5D066C211AFFE98600DC2657 /* RSSuperman4.xcdatamodel */;
 			path = RSSuperman.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

@@ -19,9 +19,11 @@
 
 - (void)configureView:(Post *)feedPost {
     self.feedPostTitle.text = feedPost.title;
-    if ([feedPost.read boolValue] != YES) {
+    if ([feedPost.isRead boolValue] != YES) {
+        self.statusImage.hidden = NO;
         self.statusImage.image = [UIImage imageNamed:@"New"];
     } else if ([feedPost.isFavorite boolValue] == YES) {
+        self.statusImage.hidden = NO;
         self.statusImage.image = [UIImage imageNamed:@"FavoriteActive"];
     } else {
         self.statusImage.hidden = YES;

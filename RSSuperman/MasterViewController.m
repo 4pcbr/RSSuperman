@@ -171,12 +171,14 @@
                     ];
             post.isFavorite = [NSNumber numberWithBool:NO];
             post.identifier = feedIdentifier;
-            post.read = [NSNumber numberWithBool:NO];
+            post.isRead     = [NSNumber numberWithBool:NO];
+            post.isPinned   = [NSNumber numberWithBool:NO];
         } else {
             post = result[0];
         }
     }
     
+    // TODO: Optimize this section
     post.title      = [feedItem.title stringByDecodingHTMLEntities];
     post.link       = feedItem.link;
     post.author     = [feedItem.author stringByDecodingHTMLEntities];
