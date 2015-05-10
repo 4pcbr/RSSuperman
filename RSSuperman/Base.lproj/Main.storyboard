@@ -69,6 +69,7 @@
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eSY-Cn-eYB">
                                 <rect key="frame" x="0.0" y="556" width="600" height="44"/>
                                 <items>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="gvc-OB-P0P"/>
                                     <barButtonItem image="Favorite" id="tkf-PX-k7J">
                                         <connections>
                                             <action selector="favoriteButtonDidTap:" destination="d5F-iJ-NBn" id="Tdb-4X-Klu"/>

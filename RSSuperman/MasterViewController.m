@@ -32,6 +32,11 @@
     }
 }
 
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+//    [super dealloc];
+}
+
 - (void)displayTextInput:(id)sender {
     UIStoryboard *textInputStoryBoard = [UIStoryboard storyboardWithName:@"TextInput" bundle:[NSBundle mainBundle]];
     UINavigationController *navController = [textInputStoryBoard instantiateInitialViewController];
@@ -76,6 +81,11 @@
                                   ];
     self.navigationItem.rightBarButtonItem = addButton;
     self.detailViewController = (DetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(feedPostHasBeenFavorited:)
+                                                 name:@"FeedPostHasBeenFavorited"
+                                               object:nil];
 }
 
 - (Feed *)insertNewFeedWithURL:(NSString *)feedURL andTitle:(NSString *)feedTitle {
@@ -332,6 +342,14 @@
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
 {
     [self.tableView endUpdates];
+}
+
+- (void)feedPostHasBeenFavorited:(NSNotification *)notification {
+    NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
+    NSError *error = nil;
+    if (![context save:&error]) {
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+    }
 }
 
 /*
